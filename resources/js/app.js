@@ -5,9 +5,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 window.Vue = require('vue');
+
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+Vue.use(Vuetify)
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,5 +33,34 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    computed: {
+      minDate() {
+        const today = new Date();
+        // const dd = today.getUTCDate();
+        return this.formatDate(today);
+      },
+      minTime() {
+
+      }
+    },
+    methods: {
+      formatDate(date) {
+        let month = `${date.getMonth() + 1}`;
+        let day = `${date.getDate()}`;
+        const year = date.getFullYear();
+
+        if (month.length < 2) month = `0${month}`;
+        if (day.length < 2) day = `0${day}`;
+
+        return [year, month, day].join('-');
+      },
+    },
+    data: () => ({
+      date: null,
+      time: null,
+
+      dateModal: false,
+      timeModal: false
+    })
 });
